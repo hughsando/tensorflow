@@ -70,6 +70,10 @@ static inline void DecreasingArgSort(const std::vector<float>& values,
 static inline bool IOUGreaterThanThreshold(
     typename TTypes<float, 2>::ConstTensor boxes, int i, int j,
     float iou_threshold) {
+// Compute intersection-over-union overlap between boxes i and j.
+//static inline float ComputeIOU(TTypes<float, 2>::ConstTensor boxes,
+//                               int i, int j) {
+
   const float ymin_i = std::min<float>(boxes(i, 0), boxes(i, 2));
   const float xmin_i = std::min<float>(boxes(i, 1), boxes(i, 3));
   const float ymax_i = std::max<float>(boxes(i, 0), boxes(i, 2));
