@@ -42,10 +42,12 @@ void CheckFeatureOrDie(CPUFeature feature, const string& feature_name) {
 // If the CPU feature is present, log warning.
 void WarnIfFeatureUnused(CPUFeature feature, const string& feature_name) {
   if (TestCPUFeature(feature)) {
+    /*
     LOG(WARNING) << "The TensorFlow library wasn't compiled to use "
                  << feature_name
                  << " instructions, but these are available on your machine "
                     "and could speed up CPU computations.";
+    */
   }
 }
 
