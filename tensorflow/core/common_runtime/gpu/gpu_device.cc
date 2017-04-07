@@ -60,6 +60,13 @@ limitations under the License.
 #include "tensorflow/core/util/device_name_utils.h"
 #include "tensorflow/core/util/stream_executor_util.h"
 
+
+bool showGpuInfo = true;
+void setShowGpuInfo(bool value)
+{
+   showGpuInfo = value;
+}
+
 namespace tensorflow {
 
 // Eigen Ops directly allocate memory only for temporary buffers used
@@ -959,13 +966,20 @@ Status BaseGPUDeviceFactory::GetValidDeviceIds(
       cc_major = 0;
       cc_minor = 0;
     }
+    if (showGpuInfo) {
     LOG(INFO) << "Found device " << i << " with properties: "
               << "\nname: " << description.name() << " major: " << cc_major
               << " minor: " << cc_minor
               << " memoryClockRate(GHz): " << description.clock_rate_ghz()
               << "\npciBusID: " << description.pci_bus_id() << "\ntotalMemory: "
               << strings::HumanReadableNumBytes(total_bytes)
+<<<<<<< HEAD
               << " freeMemory: " << strings::HumanReadableNumBytes(free_bytes);
+=======
+              << "\nFree memory: "
+              << strings::HumanReadableNumBytes(free_bytes);
+    }
+>>>>>>> Allow gpu debug to be disabled
   }
   // Checking peering and shows matrix if more than one gpu found.
   if (new_gpu_found && visible_gpu_order.size() > 1) {
@@ -974,7 +988,11 @@ Status BaseGPUDeviceFactory::GetValidDeviceIds(
 
     // Print out a matrix showing which devices can DMA to one
     // another.
+<<<<<<< HEAD
     LOG(INFO) << "Device peer to peer matrix";
+=======
+    if (showGpuInfo) {
+>>>>>>> Allow gpu debug to be disabled
     auto access_map = GetPeerAccessMap(gpu_manager, visible_gpu_order);
     string line_buf = "DMA: ";
     for (int i = 0; i < visible_gpu_order.size(); ++i) {
@@ -991,6 +1009,7 @@ Status BaseGPUDeviceFactory::GetValidDeviceIds(
         }
       }
       LOG(INFO) << line_buf;
+    }
     }
   }
 
@@ -1049,8 +1068,11 @@ Status BaseGPUDeviceFactory::GetValidDeviceIds(
     size_t new_id = ids->size();
     ids->push_back(visible_gpu_id);
 
-    LOG(INFO) << "Creating TensorFlow device (/device:GPU:" << new_id << ") -> "
+    if (showGpuInfo)
+    {
+      LOG(INFO) << "Creating TensorFlow device (/device:GPU:" << new_id << ") -> "
               << "(" << GetShortDeviceDescription(visible_gpu_id, desc) << ")";
+    }
   }
 
   return Status::OK();
