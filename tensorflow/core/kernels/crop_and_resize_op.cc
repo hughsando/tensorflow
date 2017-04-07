@@ -657,7 +657,7 @@ inline void CheckValidBoxInd<GPUDevice>(
                  context->allocate_temp(DataTypeToEnum<bool>::value,
                                         TensorShape({}), &isvalid_tensor));
 
-  typename TTypes<bool, 0>::Tensor isvalid = isvalid_tensor.tensor<bool, 0>();
+  TTypes<bool, 0>::Tensor isvalid = isvalid_tensor.tensor<bool, 0>();
 
   functor::CheckValidBoxIndHelper<GPUDevice>()(
       context->eigen_device<GPUDevice>(), box_ind, batch, isvalid);
