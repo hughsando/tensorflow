@@ -360,13 +360,11 @@ class TensorShapeUtils {
                           PartialTensorShape* out);
   static Status MakeShape(gtl::ArraySlice<int64> shape,
                           PartialTensorShape* out);
-/*
   // Convert from Eigen::TensorMap
   template<typename T>
   inline static Status MakeShape(T &t, TensorShape *out) {
      return MakeShape( t.data(), t.size(), out );
   }
-*/
 
   static string ShapeListString(const gtl::ArraySlice<TensorShape>& shapes);
 

@@ -905,7 +905,10 @@ Status GraphConstructor::MakeEdge(Node* src, int output_index, Node* dst,
 Status ConvertGraphDefToGraph(const GraphConstructorOptions& opts,
                               const GraphDef& gdef, Graph* g) {
   ShapeRefiner refiner(gdef.versions().producer(), g->op_registry());
-  return GraphConstructor::Construct(opts, gdef.node(), &gdef.versions(),
+
+  auto defs = gdef.node();
+  GraphConstructor::NodeDefSlice node_defs(defs.data(), defs.size());
+  return GraphConstructor::Construct(opts, node_defs, &gdef.versions(),
                                      &gdef.library(), g, &refiner, nullptr);
 }
 
@@ -967,7 +970,10 @@ Status ImportGraphDef(const ImportGraphDefOptions& opts, const GraphDef& gdef,
   refiner->set_graph_def_version(
       std::min(refiner->graph_def_version(), gdef.versions().producer()));
 
-  return GraphConstructor::Construct(opts, gdef.node(), &gdef.versions(),
+  auto defs = gdef.node();
+  GraphConstructor::NodeDefSlice node_defs(defs.data(), defs.size());
+
+  return GraphConstructor::Construct(opts, node_defs, &gdef.versions(),
                                      &gdef.library(), g, refiner,
                                      return_tensors);
 }

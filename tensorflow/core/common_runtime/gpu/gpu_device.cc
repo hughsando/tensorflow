@@ -11,7 +11,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-==============================================================================*/
+   ==============================================================================*/
 
 // TODO(opensource): Use a more generic sounding preprocessor name than
 // GOOGLE_CUDA
@@ -967,19 +967,15 @@ Status BaseGPUDeviceFactory::GetValidDeviceIds(
       cc_minor = 0;
     }
     if (showGpuInfo) {
-    LOG(INFO) << "Found device " << i << " with properties: "
+        LOG(INFO) << "Found device " << i << " with properties: "
               << "\nname: " << description.name() << " major: " << cc_major
               << " minor: " << cc_minor
               << " memoryClockRate(GHz): " << description.clock_rate_ghz()
               << "\npciBusID: " << description.pci_bus_id() << "\ntotalMemory: "
               << strings::HumanReadableNumBytes(total_bytes)
-<<<<<<< HEAD
-              << " freeMemory: " << strings::HumanReadableNumBytes(free_bytes);
-=======
               << "\nFree memory: "
               << strings::HumanReadableNumBytes(free_bytes);
     }
->>>>>>> Allow gpu debug to be disabled
   }
   // Checking peering and shows matrix if more than one gpu found.
   if (new_gpu_found && visible_gpu_order.size() > 1) {
@@ -988,11 +984,8 @@ Status BaseGPUDeviceFactory::GetValidDeviceIds(
 
     // Print out a matrix showing which devices can DMA to one
     // another.
-<<<<<<< HEAD
-    LOG(INFO) << "Device peer to peer matrix";
-=======
     if (showGpuInfo) {
->>>>>>> Allow gpu debug to be disabled
+       LOG(INFO) << "Device peer to peer matrix";
     auto access_map = GetPeerAccessMap(gpu_manager, visible_gpu_order);
     string line_buf = "DMA: ";
     for (int i = 0; i < visible_gpu_order.size(); ++i) {
